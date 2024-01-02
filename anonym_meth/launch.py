@@ -51,9 +51,18 @@ def main():
             except subprocess.CalledProcessError:
                 print("Erreur lors de l'exécution des tests stats.")
                 sys.exit(1)
-        else:
-            # Systeme d'arguments ou fichier texte pour passer les paramètres
-            pass
+
+        elif run_interface == "N":
+            # Systeme via le fichier texte pour passer les paramètres
+            no_interface_path = "./dtai_module/NoInterface.py"
+            execution_command = ["python3", no_interface_path]
+
+            try:
+                subprocess.run(execution_command, check=True)
+            except subprocess.CalledProcessError:
+                print("Erreur lors de l'exécution des tests stats.")
+                sys.exit(1)
+
     else:
         print("Arrêt du programme")
 

@@ -1,0 +1,5 @@
+../data/CSV_output/
+../gener_simulated_data_meth/
+../analyse_anonym_meth/
+10
+1000
