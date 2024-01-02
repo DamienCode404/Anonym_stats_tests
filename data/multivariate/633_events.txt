@@ -1,0 +1,46 @@
+Time,Event
+0,Patient exit
+30,Heart rate monitoring
+60,Arterial pressure monitoring
+90,Oxygen saturation monitoring
+120,BIS monitoring
+150,Venous route installation
+390,Bair hugger
+450,CEFAZOLINE
+540,Oxygenation
+900,SUFENTANIL
+930,PROPOFOL
+960,ATRACURIUM
+990,Ocular occlusion
+1470,Intubation
+1920,SEVOFLURANE
+1950,Controlled ventilation
+1980,Oxygen 30%
+2010,Pulmonar auscultation
+2040,Intubation ballon presure check
+2070,Lung volume recruitment
+2160,Temperature monitoring
+2430,Pulmonar auscultation
+2460,Points of support check
+2490,SEVOFLURANE
+2610,SUFENTANIL
+2670,Incision
+3240,ATRACURIUM
+3510,Ubumbilical trocar
+3570,Pneumoperitoneum inflation
+4650,Pulmonar auscultation
+4680,Lung volume recruitment
+4980,Preperitoneal space dissection
+5310,Spermatic cord dissection
+5520,ATRACURIUM
+5550,Hernia space dissection
+5850,SUFENTANIL
+7800,ATRACURIUM
+9060,Prosthetics setting
+10620,Pneumoperitoneum déflation
+10680,Closing
+11040,Bandage
+11070,SEVOFLURANE stop
+11820,Decurarization check
+12000,Decurarization
+12360,Patient exit
