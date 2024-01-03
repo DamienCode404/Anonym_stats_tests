@@ -10,11 +10,11 @@
 
 using namespace std;
 
-void processFiles(const string& inputFolder, const string& outputFolder, const string& anonymizedFolder) {
+void processFiles(const string& inputFolder, const string& outputFolder, const string& anonymizedFolder, const int numberPatient) {
     srand(time(0));
 
     #pragma omp parallel for
-    for (int i = 1; i <= 1000; ++i) {
+    for (int i = 1; i <= numberPatient; ++i) {
         double anonymization_variable;
         if (rand() % 2 == 0) {
             anonymization_variable = 1 + (-0.02 - (rand() % 81) * 0.001); 

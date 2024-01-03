@@ -21,6 +21,6 @@ struct EventsData {
     string Event;
 };
 
-void processFiles(const string& inputFolder, const string& outputFolder, const string& anonymizedFolder);
+void processFiles(const string& inputFolder, const string& outputFolder, const string& anonymizedFolder, const int numberPatient);
 
 #endif // ANONYMIZATION_H

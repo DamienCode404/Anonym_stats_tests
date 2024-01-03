@@ -21,21 +21,12 @@ def main(dossier_non_anonyme, dossier_anonyme, output_folder, num_samples, num_a
     statistics_tester.generate_statistical_tests()
 
 if __name__ == "__main__":
-    # Lire les paramètres depuis le fichier parametres.txt
-    with open("parametres.txt", "r") as param_file:
-        lines = param_file.readlines()
+    # Lire les paramètres depuis la ligne de commande
+    dossier_non_anonyme = sys.argv[1]
+    dossier_anonyme = sys.argv[2]
+    output_folder = sys.argv[3]
+    num_samples = int(sys.argv[4])
+    num_anonymous_patients = int(sys.argv[5])
 
-    # Assurez-vous qu'il y a suffisamment de lignes dans le fichier
-    if len(lines) < 5:
-        print("Le fichier de paramètres doit contenir au moins 5 lignes.")
-        sys.exit(1)
-
-    # Récupérez les paramètres à partir du fichier
-    dossier_non_anonyme = lines[0].strip()
-    dossier_anonyme = lines[1].strip()
-    output_folder = lines[2].strip()
-    num_samples = int(lines[3].strip())
-    num_anonymous_patients = int(lines[4].strip())
-
-    # Appelez la fonction main avec les paramètres
+    # Appel de la fonction main avec les paramètres
     main(dossier_non_anonyme, dossier_anonyme, output_folder, num_samples, num_anonymous_patients)

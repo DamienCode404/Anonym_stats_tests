@@ -32,4 +32,4 @@ Voulez-vous passer par une interface graphique ? (O/n): O
 
 ## If you're on a server and can't display an interface
 
-system of arguments or text files to fill in parameters
+Use the parametres.txt file in the anonym_meth folder to fill in the variables to launch the statistics calculation.

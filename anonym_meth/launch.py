@@ -2,17 +2,18 @@ import subprocess
 import sys
 
 def main():
-    if len(sys.argv) != 4:
-        print("Il faut 3 arguments : python3 launch.py <dossierEntree> <dossierSortie> <dossierAnonyme>")
+    if len(sys.argv) != 5:
+        print("Il faut 4 arguments : python3 launch.py <dossierEntree> <dossierSortie> <dossierAnonyme> <nombrePatients>")
         sys.exit(1)
 
     input_folder = sys.argv[1]
     output_folder = sys.argv[2]
     anonymized_folder = sys.argv[3]
+    number_patient = sys.argv[4]
 
     # Exécuter l'exécutable généré
     executable_path = "./exe/executable.exe"
-    command = [executable_path, input_folder, output_folder, anonymized_folder]
+    command = [executable_path, input_folder, output_folder, anonymized_folder, number_patient]
 
     try:
         subprocess.run(command, check=True)
@@ -53,9 +54,25 @@ def main():
                 sys.exit(1)
 
         elif run_interface == "N":
+            # Lecture des paramètres depuis le fichier parametres.txt
+            with open("parametres.txt", "r") as param_file:
+                lines = param_file.readlines()
+
+            # Assurez-vous qu'il y a suffisamment de lignes dans le fichier
+            if len(lines) < 5:
+                print("Le fichier de paramètres doit contenir au moins 5 lignes.")
+                sys.exit(1)
+
+            # Récupérez les paramètres à partir du fichier
+            dossier_non_anonyme = lines[0].strip()
+            dossier_anonyme = lines[1].strip()
+            output_folder = lines[2].strip()
+            num_samples = int(lines[3].strip())
+            num_anonymous_patients = int(lines[4].strip())
+
             # Systeme via le fichier texte pour passer les paramètres
             no_interface_path = "./dtai_module/NoInterface.py"
-            execution_command = ["python3", no_interface_path]
+            execution_command = ["python3", no_interface_path, dossier_non_anonyme, dossier_anonyme, output_folder, str(num_samples), str(num_anonymous_patients)]
 
             try:
                 subprocess.run(execution_command, check=True)

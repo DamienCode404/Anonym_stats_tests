@@ -1,0 +1,5 @@
+./input/CSV_output_example/
+./output/anonymized_example/
+./output/analyse_example/
+5
+50
