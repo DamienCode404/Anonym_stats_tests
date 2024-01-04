@@ -31,8 +31,7 @@ def main():
             print("Veuillez entrer une réponse valide.")
 
     if run_stats_tests == "O":
-        print("Exécution des tests statistiques")
-
+        
         while True:
             # Demander à l'utilisateur s'il souhaite passer par une interface graphique
             run_interface = input("Voulez-vous passer par une interface graphique ? (O/n): ").strip().upper()

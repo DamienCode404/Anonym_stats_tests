@@ -8,13 +8,24 @@
 #include <ctime>
 #include <omp.h>
 
+#include "progressbar.hpp"
+
 using namespace std;
 
 void processFiles(const string& inputFolder, const string& outputFolder, const string& anonymizedFolder, const int numberPatient) {
     srand(time(0));
 
+    progressbar bar(numberPatient);
+    cout << "Creation de "<< numberPatient << " patients anonymes";
+    bar.set_todo_char(" ");
+    bar.set_done_char("█");
+    bar.set_opening_bracket_char("|");
+    bar.set_closing_bracket_char("|");
+
     #pragma omp parallel for
     for (int i = 1; i <= numberPatient; ++i) {
+        #pragma omp critical
+        bar.update();
         double anonymization_variable;
         if (rand() % 2 == 0) {
             anonymization_variable = 1 + (-0.02 - (rand() % 81) * 0.001); 
@@ -82,4 +93,5 @@ void processFiles(const string& inputFolder, const string& outputFolder, const s
         sortiesCsv.close();
         anonymeCsv.close();
     }
+    cout << endl;
 }
