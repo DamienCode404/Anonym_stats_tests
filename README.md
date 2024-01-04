@@ -15,10 +15,15 @@ pip install -r install.txt
 cd anonym_meth
 make
 ```
-## Execute the launch.py file, specifying the 3 arguments
+## Try out the program with a toy version in the exemple_meth directory
+
+```bash
+python3 launch_toy_exemple.py
+```
+## Execute the launch.py file in the anonym_meth directory, specifying the 4 arguments
 
 ```bash 
-python3 launch.py ../data/multivariate/ ../data/CSV_output/ ../gener_simulated_data_meth/
+python3 launch.py ../data/multivariate/ ../data/CSV_output/ ../gener_simulated_data_meth/ 1000
 ```
 ## Choice of statistical tests and parameter selection
 
@@ -33,3 +38,14 @@ Voulez-vous passer par une interface graphique ? (O/n): O
 ## If you're on a server and can't display an interface
 
 Use the parametres.txt file in the anonym_meth folder to fill in the variables to launch the statistics calculation.
+
+## Resources
+
+- See the repo for the progress bar in the cpp section [here](https://github.com/gipert/progressbar/tree/master)
+- tqdm : A Fast, Extensible Progress Bar for Python and CLI [here](https://github.com/tqdm/tqdm)
+- customtkinter : A modern and customizable python UI-library based on Tkinter [here](https://github.com/TomSchimansky/CustomTkinter)
+- dtaidistance : Library for time series distances [here](https://dtaidistance.readthedocs.io/en/latest/)
+- numpy : The fundamental package for scientific computing [here](https://numpy.org/)
+- pandas : Open source data analysis and manipulation tool [here](https://pandas.pydata.org/)
+- scipy : Fundamental algorithms for scientific computing [here](https://scipy.org/)
+- seaborn : Statistical data visualization [here](https://seaborn.pydata.org/)

@@ -1,5 +1,6 @@
 analyse_anonym_meth/*
 data/*
 gener_simulated_data_meth/*
+exemple_meth/output/*
 
 __pycache__/
