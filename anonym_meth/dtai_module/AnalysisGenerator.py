@@ -90,6 +90,21 @@ class AnalysisGenerator:
                 output_file = f"stats/{stat}_values_meth_{param_physio}.csv"
                 self.save_to_csv(output_file, df)
 
+                # Comparaison et sauvegarde du graphique
+                plt.figure(figsize=(10, 6))
+                plt.plot(df[f"{stat}_anonym"], label='Anonyme', marker='o')
+                plt.plot(df[f"{stat}_real"], label='Réel', marker='o')
+                plt.title(f'Comparaison des valeurs {stat} pour {param_physio}')
+                plt.xlabel('Patients')
+                plt.ylabel(f'Valeurs {stat}')
+                plt.legend()
+                plt.grid(True)
+
+                graph_output_file = f"comparison_{param_physio}_{stat}.png"
+                graph_output_path = os.path.join(self.output_folder, "graphs", graph_output_file)
+                os.makedirs(os.path.dirname(graph_output_path), exist_ok=True)
+                plt.savefig(graph_output_path)
+                plt.close()
 
     def calculate_statistic(self, data, stat):
         if stat == 'avg':

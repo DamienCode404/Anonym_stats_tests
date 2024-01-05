@@ -39,6 +39,23 @@ Voulez-vous passer par une interface graphique ? (O/n): O
 
 Use the parametres.txt file in the anonym_meth folder to fill in the variables to launch the statistics calculation.
 
+## OUTPUT 
+
+# stats : 
+- In this directory, you'll obtain the results of mean, maximum, minimum and standard deviation values for each physiological variable by patient (anonymous and real).
+
+# tests : Test results for each statistic obtained from the stats folder :
+- statKS,pvalKS: test statistics and Kolmogorov-Smirnov p-value.
+- statWMW_p,pvalWMW_p: Wilcoxon / Mann-Whiney paired test statistic and p-value.
+- statWMW_up,pvalWMW_up: test statistic and p-value of the Wilcoxon / Mann-Whiney unpaired test.
+- Euclidean distance.
+
+# dissimilarités normalisées pour chaque patient + boxplot :
+- For each of the anonymous patients, a number of real patients were randomly selected (10 recommended). We then calculated the univariate DTW between anonymous and random patients for each physiological parameter (HR, SBP, MAP, DBP). We then calculated the multivariate DTW (DTWm) as the mean of the previous 4 univariate DTWs. We keep the minimum DTWm_min on the 10 real patients. We calculated the mean (E) and standard deviation (S) on all DTWm_min, normalizing each dissimilarity: normalized DTWm_min = (DTWm_min-E)/S.
+
+# graphs :
+- Graphical comparison of values obtained in the stats directory.
+
 ## Resources
 
 - See the repo for the progress bar in the cpp section [here](https://github.com/gipert/progressbar/tree/master)
