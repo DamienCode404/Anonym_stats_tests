@@ -1,5 +1,4 @@
 import os
-from tqdm import tqdm
 import pandas as pd
 import numpy as np
 from scipy.stats import ks_2samp, wilcoxon

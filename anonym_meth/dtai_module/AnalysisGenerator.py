@@ -65,13 +65,13 @@ class AnalysisGenerator:
             for stat in statistics:
                 anonym_list, real_list = [], []
 
-                for i in tqdm(range(1, self.data_processor.num_anonymous_patients + 1), desc=f"Processing {param_physio} - {stat}"):                    
+                for i in tqdm(range(1, self.data_processor.num_anonymous_patients + 1), desc=f"anonyme [{param_physio} - {stat}]"):                    
                     data_anonymous = self.data_processor.load_patient_data(i, is_anonymous=True)
                     if data_anonymous is not None:
                         anonym_list.append(self.calculate_statistic(
                             data_anonymous[param_physio], stat))
 
-                for i in tqdm(range(1, self.data_processor.num_anonymous_patients + 1), desc=f"Processing {param_physio} - {stat}"):
+                for i in tqdm(range(1, self.data_processor.num_anonymous_patients + 1), desc=f"real [{param_physio} - {stat}]"):
                     data_real = self.data_processor.load_patient_data(i, is_anonymous=False)
                     if data_real is not None:
                         # Assurez-vous que les données réelles ne sont pas vides
