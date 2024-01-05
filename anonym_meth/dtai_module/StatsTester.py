@@ -58,17 +58,17 @@ class StatisticsTester:
 
                     output_data = pd.DataFrame({
                         'param_physio': [param_physio],
-                        'statKS': [resultats[0]],
-                        'pvalKS': [resultats[1]],
-                        'statWMW_p': [resultats[2]],
-                        'pvalWMW_p': [resultats[3]],
-                        'statWMW_up': [resultats[4]],
-                        'pvalWMW_up': [resultats[5]],
-                        'diste_avg': [resultats[6]],
-                        'diste_std': [resultats[7]],
-                        'diste_med': [resultats[8]],
-                        'diste_min': [resultats[9]],
-                        'diste_max': [resultats[10]],
+                        'statKS': [round(resultats[0], 2)],
+                        'pvalKS': [round(resultats[1], 2)],
+                        'statWMW_p': [round(resultats[2], 2)],
+                        'pvalWMW_p': [round(resultats[3], 2)],
+                        'statWMW_up': [round(resultats[4], 2)],
+                        'pvalWMW_up': [round(resultats[5], 2)],
+                        'diste_avg': [round(resultats[6], 2)],
+                        'diste_std': [round(resultats[7], 2)],
+                        'diste_med': [round(resultats[8], 2)],
+                        'diste_min': [round(resultats[9], 2)],
+                        'diste_max': [round(resultats[10], 2)],
                     })
 
                     output_file = f"tests_meth_{param_physio}_{stat}.csv"

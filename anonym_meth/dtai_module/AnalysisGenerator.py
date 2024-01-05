@@ -49,8 +49,11 @@ class AnalysisGenerator:
 
             min_dtwm_normalized = [(dtw_m - E) / S for dtw_m in min_dtwm_list]
 
+            # Arrondir les valeurs à deux chiffres après la virgule
+            min_dtwm_normalized = [round(value, 2) for value in min_dtwm_normalized]
+
             self.save_to_csv('distri_dissim_norm_meth.csv', {
-                             'dissim_norm': min_dtwm_normalized})
+                            'dissim_norm': min_dtwm_normalized})
             self.generate_boxplot('boxplot_meth.png', min_dtwm_normalized)
 
 
@@ -90,15 +93,15 @@ class AnalysisGenerator:
 
     def calculate_statistic(self, data, stat):
         if stat == 'avg':
-            return data.mean()
+            return round(data.mean(), 2)
         elif stat == 'std':
-            return data.std()
+            return round(data.std(), 2)
         elif stat == 'med':
-            return data.median()
+            return round(data.median(), 2)
         elif stat == 'min':
-            return data.min()
+            return round(data.min(), 2)
         elif stat == 'max':
-            return data.max()
+            return round(data.max(), 2)
 
     def save_to_csv(self, filename, data):
         output_file = os.path.join(self.output_folder, filename)
