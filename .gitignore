@@ -1,7 +1,7 @@
-analyse_anonym_meth/*
+# analyse_anonym_meth/*
 data/*
 gener_simulated_data_meth/*
-example_meth/input/*
-example_meth/output/*
+# example_meth/input/*
+# example_meth/output/*
 
 __pycache__/
