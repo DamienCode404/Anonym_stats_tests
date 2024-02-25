@@ -3,12 +3,28 @@ import pandas as pd
 import numpy as np
 from scipy.stats import ks_2samp, wilcoxon
 
+###########################################################################################
+### Class: StatisticsTester                                                             ###
+### Description: This class is responsible for performing statistical tests on the      ###
+### physiological data obtained from both anonymous and real patients. It utilizes      ###
+### methods to load data, save results to CSV files, and perform statistical tests      ###
+### such as Kolmogorov-Smirnov and Wilcoxon rank-sum. The results are then saved in     ###
+### CSV files for further analysis and comparison.                                      ###
+###                                                                                     ###
+###########################################################################################
 
 class StatisticsTester:
     def __init__(self, output_folder, data_processor):
         self.output_folder = output_folder
         self.data_processor = data_processor
 
+    #########################################
+        
+    """
+    Load statistical data from CSV files for a specified physiological 
+    parameter and statistic. If the file is not found, returns None.
+    """
+        
     def load_data(self, param_physio, stat, is_anonymous=True):
         filename = os.path.join(
             self.output_folder, f"stats/{stat}_values_meth_{param_physio}.csv")
@@ -18,10 +34,24 @@ class StatisticsTester:
         else:
             return None
 
+    #########################################
+    
+    """
+    Save data to a CSV file in the specified subdirectory within the output
+    folder. Creates the subdirectory if it doesn't exist.
+    """
+
     def save_to_csv(self, filename, data, subdirectory="tests"):
         output_file = os.path.join(self.output_folder, subdirectory, filename)
         os.makedirs(os.path.dirname(output_file), exist_ok=True)
         pd.DataFrame(data).to_csv(output_file, index=False)
+
+    #########################################
+    
+    """
+    Perform statistical tests (KS and WMW) on the provided anonymous and real
+    patient data. Returns the test statistics and p-values.
+    """
 
     def perform_statistical_tests(self, data_anonymous, data_real):
         statKS, pvalKS = ks_2samp(data_anonymous, data_real)
@@ -42,6 +72,13 @@ class StatisticsTester:
         diste_max = np.sqrt(np.mean((np.max(data_anonymous) - np.max(data_real))**2))
 
         return statKS, pvalKS, statWMW_p, pvalWMW_p, statWMW_up, pvalWMW_up, diste_avg, diste_std, diste_med, diste_min, diste_max
+
+    #########################################
+
+    """
+    Iterate over physiological parameters and statistics, load data, and
+    perform statistical tests. Save the results in CSV files for comparison.
+    """
 
     def generate_statistical_tests(self):
         statistics = ['avg', 'std', 'med', 'min', 'max']

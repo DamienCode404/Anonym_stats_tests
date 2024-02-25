@@ -15,72 +15,88 @@
 
 using namespace std;
 
+// Function to process files and perform anonymization
 void processFiles(const string& inputFolder, const string& outputFolder, const string& anonymizedFolder, const int numberPatient) {
+    // Initialize random seed
     srand(time(0));
 
-    int choix_anonymization_meth;
-    bool boucle = true;
+    // Variable for anonymization method choice
+    int anonymization_method_choice;
+    bool loop = true;
 
-    while(boucle){
-        cout << "Choisissez une méthode d'anonymisation :" << endl;
-        cout << "1 = Valeur aléatoire différente pour chaque patient" << endl;
-        cout << "2 = Valeur aléatoire unique pour tout les patients" << endl;
-        cout << "Entrez votre méthode choisie : "; 
-        cin >> choix_anonymization_meth;
+    // Loop until a valid choice is made
+    while(loop){
+        cout << "Choose an anonymization method :" << endl;
+        cout << "1 = Random different value for each patient" << endl;
+        cout << "2 = Random value, the same for all patients " << endl;
+        cout << "Enter your method : "; 
+        cin >> anonymization_method_choice;
 
-        if (cin.fail() || (choix_anonymization_meth != 1 && choix_anonymization_meth != 2)) {
+        // Check if input is valid
+        if (cin.fail() || (anonymization_method_choice != 1 && anonymization_method_choice != 2)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Veuillez entrer 1 ou 2" << endl;
+            cout << "Please type 1 or 2" << endl;
         } else {
-            boucle = false;
+            loop = false;
             break;
         }
     }
 
+    // Progress bar initialization
     progressbar bar(numberPatient);
-    cout << "Creation de "<< numberPatient << " patients anonymes";
+    cout << "Creation of " << numberPatient << " anonymised patients";
     bar.set_todo_char(" ");
     bar.set_done_char("█");
     bar.set_opening_bracket_char("|");
     bar.set_closing_bracket_char("|");
 
-    // Initialisation de la deuxième méthode d'anonymisation
-    // Création d'un objet random_device pour obtenir une source d'entropie matériellement aléatoire
+    // Initialize the second anonymization method
+    // Create a random device object to obtain a source of hardware entropy
     random_device rd;
-    // Initialisation d'un générateur de nombres aléatoires avec la valeur du random_device
+    // Initialize a random number generator with the value of the random device
     default_random_engine generator(rd());
-    // Définition d'une distribution uniforme de nombres réels entre -0.2 et 0.2
+    // Define a uniform distribution of real numbers between -0.2 and 0.2
     uniform_real_distribution<double> distribution(-0.2, 0.2);
 
-    switch(choix_anonymization_meth){
+    // Switch statement for anonymization method choice
+    switch(anonymization_method_choice){
+        // Random different value for each patient
         case 1:
+            // Parallel loop for each patient
             #pragma omp parallel for
             for (int i = 1; i <= numberPatient; ++i) {
+                // Update progress bar
                 #pragma omp critical
                 bar.update();
+
+                // Variable for anonymization
                 double anonymization_variable;
+                // Randomly choose whether to increase or decrease the value
                 if (rand() % 2 == 0) {
                     anonymization_variable = 1 + (-0.02 - (rand() % 81) * 0.001); 
                 } else {
                     anonymization_variable = 1 + (0.02 + (rand() % 81) * 0.001); 
                 }
 
-                // Traitement des fichiers series.txt
+                // Process series.txt and events.txt files
                 ifstream seriesFile(inputFolder + to_string(i) + "_series.txt");
                 ifstream eventsFile(inputFolder + to_string(i) + "_events.txt");
 
                 ofstream sortiesCsv(outputFolder + to_string(i) + "_sorties.csv"); 
                 ofstream anonymeCsv(anonymizedFolder + to_string(i) + "_anonyme.csv"); 
 
+                // Check if files are opened successfully
                 if (!seriesFile || !eventsFile || !sortiesCsv || !anonymeCsv) {
-                    cerr << "Erreur lors de l'ouverture des fichiers." << endl;
+                    cerr << "Error opening files." << endl;
                     exit(1);
                 }
 
+                // Write headers to output files
                 sortiesCsv << "Time,FC,PAS,PAM,PAD,events" << endl;
                 anonymeCsv << "Time,FC,PAS,PAM,PAD,events" << endl;
 
+                // Read data from events file
                 string line;
                 vector<SeriesData> seriesData;
                 vector<EventsData> eventsData;
@@ -100,6 +116,7 @@ void processFiles(const string& inputFolder, const string& outputFolder, const s
 
                 lineCount = 0;
 
+                // Read data from series file and perform anonymization
                 while (getline(seriesFile, line)) {
                     lineCount++;
                     if (lineCount >= 3) {
@@ -115,45 +132,52 @@ void processFiles(const string& inputFolder, const string& outputFolder, const s
                                 break; 
                             }
                         }
-                        // fixed format sera en notation décimale fixe
-                        // setprecision(2) limite le nombre de chiffres après la virgule à deux
+                        // Write anonymized data to file
                         sortiesCsv << fixed << setprecision(2) << data.Time << "," << data.FC << "," << data.PAS << "," << data.PAM << "," << data.PAD << "," << eventsValue << endl;
                         anonymeCsv << fixed << setprecision(2) << data.Time << "," << data.FC * anonymization_variable << "," << data.PAS * anonymization_variable << "," << data.PAM * anonymization_variable << "," << data.PAD * anonymization_variable << "," << eventsValue << endl;
                     }
                 }
 
+                // Close files
                 seriesFile.close();
                 eventsFile.close();
                 sortiesCsv.close();
                 anonymeCsv.close();
             }
-            boucle = false;
+            loop = false;
             break;
             
+        // Random value, the same for all patients
         case 2:
+            // Modifier for randomization
             double random_modifier;
             random_modifier = 1.0 + distribution(generator);
 
+            // Parallel loop for each patient
             #pragma omp parallel for
             for (int i = 1; i <= numberPatient; ++i) {
+                // Update progress bar
                 #pragma omp critical
                 bar.update();
 
-                // Traitement des fichiers series.txt
+                // Process series.txt and events.txt files
                 ifstream seriesFile(inputFolder + to_string(i) + "_series.txt");
                 ifstream eventsFile(inputFolder + to_string(i) + "_events.txt");
 
                 ofstream sortiesCsv(outputFolder + to_string(i) + "_sorties.csv"); 
                 ofstream anonymeCsv(anonymizedFolder + to_string(i) + "_anonyme.csv"); 
 
+                // Check if files are opened successfully
                 if (!seriesFile || !eventsFile || !sortiesCsv || !anonymeCsv) {
-                    cerr << "Erreur lors de l'ouverture des fichiers." << endl;
+                    cerr << "Error opening files." << endl;
                     exit(1);
                 }
 
+                // Write headers to output files
                 sortiesCsv << "Time,FC,PAS,PAM,PAD,events" << endl;
                 anonymeCsv << "Time,FC,PAS,PAM,PAD,events" << endl;
 
+                // Read data from events file
                 string line;
                 vector<SeriesData> seriesData;
                 vector<EventsData> eventsData;
@@ -173,6 +197,7 @@ void processFiles(const string& inputFolder, const string& outputFolder, const s
 
                 lineCount = 0;
 
+                // Read data from series file and perform anonymization
                 while (getline(seriesFile, line)) {
                     lineCount++;
                     if (lineCount >= 3) {
@@ -189,21 +214,23 @@ void processFiles(const string& inputFolder, const string& outputFolder, const s
                             }
                         }
 
+                        // Write anonymized data to file
                         sortiesCsv << fixed << setprecision(2) << data.Time << "," << data.FC << "," << data.PAS << "," << data.PAM << "," << data.PAD << "," << eventsValue << endl;
                         anonymeCsv << fixed << setprecision(2) << data.Time << "," << data.FC * random_modifier << "," << data.PAS * random_modifier << "," << data.PAM * random_modifier << "," << data.PAD * random_modifier << "," << eventsValue << endl;
                     }
                 }
 
+                // Close files
                 seriesFile.close();
                 eventsFile.close();
                 sortiesCsv.close();
                 anonymeCsv.close();
             }
-            boucle = false;
+            loop = false;
             break;
 
         default:
-            cout << "Veuillez entrer un nombre valide" << endl;
+            cout << "Please enter a valid number" << endl;
             break;
     }
     cout << endl;

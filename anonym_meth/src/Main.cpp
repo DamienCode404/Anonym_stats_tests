@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
     if (argc != 5) {
-        cerr << "Il faut 4 arguments : " << argv[0] << " <dossierEntree> <dossierSortie> <dossierAnonyme> <nombrePatients>" << endl;
+        cerr << "You need 4 arguments : " << argv[0] << " <InputFolder> <OutputFolderReal> <OutputFolderAnonymised> <PatientsNumber>" << endl;
         return 1;
     }
 
