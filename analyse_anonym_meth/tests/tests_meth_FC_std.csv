@@ -1,2 +1,2 @@
 param_physio,statKS,pvalKS,statWMW_p,pvalWMW_p,statWMW_up,pvalWMW_up,diste_avg,diste_std,diste_med,diste_min,diste_max
-FC,0.02,0.99,244229.0,0.51,244229.0,0.51,0.01,0.06,0.04,0.36,1.83
+FC,0.06,0.1,0.0,0.0,0.0,0.0,0.32,0.1,0.3,0.16,0.97

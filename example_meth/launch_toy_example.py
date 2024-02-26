@@ -42,7 +42,7 @@ def main():
 
     if run_stats_tests == "Y":
         # Read parameters from the parameters.txt file
-        with open("parametres_example.txt", "r") as param_file:
+        with open("parameters_example.txt", "r") as param_file:
             lines = param_file.readlines()
 
         # Ensure there are enough lines in the file

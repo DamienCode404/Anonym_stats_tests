@@ -1,8 +1,8 @@
 
 # Anonym_stats_tests
 
-The aim of this project is to anonymize a set of real patient data. This is a method frequently used in science to respect medical confidentiality. This anonymization will be used, for example, to reuse medical data for statistical testing.
-
+The aim of this project is to anonymize a set of real patient data. This is a method frequently used in science to respect medical confidentiality. This anonymization will be used, for example, to reuse medical data for statistical testing. Concerning our anonymisation method, we have decide to change the values of the variables (except Time) from the series.txt by an amount between -8 to 8% (random).
+The first method take a random value (between -8 to 8) different for every patients, and the second method use the same random value for every patients.
 
 ## Install Python dependencies using the install.txt file
 
@@ -37,7 +37,7 @@ Voulez-vous passer par une interface graphique ? (O/n): O
 
 ## If you're on a server and can't display an interface
 
-Use the parametres.txt file in the anonym_meth folder to fill in the variables to launch the statistics calculation.
+Use the parameters.txt file in the anonym_meth folder to fill in the variables to launch the statistics calculation.
 
 ## OUTPUT 
 
